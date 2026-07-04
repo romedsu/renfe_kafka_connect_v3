@@ -56,7 +56,7 @@ def guardar_db(data):
 
     try:
         for d in data:        
-            cur.execute("INSERT INTO rutasAsturias (destino,pais,aerolinea) VALUES (%s, %s, %s)", 
+            cur.execute("INSERT INTO rutasAenaAsturias (destino,pais,aerolinea) VALUES (%s, %s, %s)", 
                             (d['destino'], d['pais'],d['aerolinea']))
             conn.commit()
 
@@ -78,7 +78,7 @@ def scraper_aena_asturias():
     response = requests.get(url, headers=headers)
     
     if response.status_code != 200:
-        print(f"Error al acceder a Aena: {response.status_code}")
+        logging.error(f"Error al acceder a Aena: {response.status_code}")
         return
 
     soup = BeautifulSoup(response.content, 'html.parser')
@@ -109,7 +109,7 @@ def scraper_aena_asturias():
     df.insert(0, 'id', range(1, len(df) + 1))
     
     # df.to_csv('/app/output/rutas_ovd.csv', index=True, index_label='id')
-    df.to_csv('/app/output/rutas_aena_ovd.csv', index=False)
+    df.to_csv('/app/output/rutas_aena_asturias.csv', index=False)
 
     logging.info(f"Web scraping con exito --> Se han guardado .csv --> {len(df)} rutas")
 

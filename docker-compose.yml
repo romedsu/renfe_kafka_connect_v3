@@ -1,6 +1,16 @@
 services:   # Aquí empiezan a definirse los componentes (contenedores) del sistema.
 
   # --- INFRAESTRUCTURA DE MENSAJERÍA ---
+
+  # rutas AENA asturias
+  scraper-aena:
+    build:
+      context: .
+      dockerfile: _data/scraper/Dockerfile.scraper
+    container_name: scraper-aena
+    volumes:
+      - ./_data/scraper:/app/output
+
   zookeeper:  # Nombre de nuestro primer servicio.
     image: confluentinc/cp-zookeeper:7.5.0 # La "receta" (imagen) que Docker descargará de internet.
     container_name: zookeeper
@@ -196,7 +206,7 @@ services:   # Aquí empiezan a definirse los componentes (contenedores) del sist
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 20s
+      start_period: 30s
 
     environment:
       KAFKA_BROKER: "kafka:9092"   
@@ -210,20 +220,17 @@ services:   # Aquí empiezan a definirse los componentes (contenedores) del sist
   #     - ./_data/pandas:/app/output # salida .csv
 
 
-  scraper-aena:
+  
+
+  consumer:
     build:
       context: .
-      dockerfile: _data/scraper/Dockerfile.scraper
-    container_name: scraper-aena
+      dockerfile: src/consumer_vuelos/Dockerfile.consumer
+
+    container_name: consumer-vuelos
+    
     volumes:
-      - ./_data/scraper:/app/output
-
-  dic-rutas:
-    build:
-      context: .
-      dockerfile: src/dic_rutas/Dockerfile.dic_rutas
-
-    container_name: dic-rutas
+      - .:/app
 
     depends_on:
       kafka:
@@ -241,6 +248,7 @@ services:   # Aquí empiezan a definirse los componentes (contenedores) del sist
       interval: 30s
       timeout: 10s
       retries: 3
+    
 
       
 

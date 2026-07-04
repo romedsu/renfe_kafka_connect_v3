@@ -6,6 +6,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY schemas/ /app/schemas/
-COPY src/dic_rutas /app/src/dic_rutas
+COPY src/consumer_vuelos /app/src/consumer_vuelos
 
-CMD ["python", "src/dic_rutas/dic_rutas.py"]
+CMD ["python", "src/consumer_vuelos/dic_rutas.py"]

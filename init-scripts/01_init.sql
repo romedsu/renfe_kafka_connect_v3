@@ -6,7 +6,7 @@
 --     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 -- );
 
-CREATE TABLE IF NOT EXISTS rutasAsturias (
+CREATE TABLE IF NOT EXISTS rutasAenaAsturias (
     id SERIAL PRIMARY KEY,
     destino VARCHAR NOT NULL,
     pais VARCHAR NOT NULL,
